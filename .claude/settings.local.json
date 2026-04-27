@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet run *)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 5135 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; Write-Host \"Done\")",
+      "Bash(dotnet add *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\YOUSUF~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-yousufsafwan-source-repos-Product\\\\ba91f340-77f0-40ac-afed-43be8fb835b5\\\\tasks\\\\bxarjfw1v.output\")",
+      "Bash(Select-String \"Now listening|Application started|localhost\")",
+      "PowerShell(gh auth status 2>&1)"
+    ]
+  }
+}
