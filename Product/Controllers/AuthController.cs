@@ -14,6 +14,10 @@ namespace Product.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<Auth.Models.Auth>> create([FromBody] Auth.Models.Auth auth)
         {
+            bool exists = await _context.Auths.AnyAsync(a => a.UserID == auth.UserID);
+            if (exists)
+                return Conflict(new { message = "UserID already taken." });
+
             auth.Password = BCrypt.Net.BCrypt.HashPassword(auth.Password);
             _context.Auths.Add(auth);
             await _context.SaveChangesAsync();
@@ -26,7 +30,13 @@ namespace Product.Controllers
             var user = await _context.Auths
                 .FirstOrDefaultAsync(a => a.UserID == request.UserID);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            if (user == null)
+                return Unauthorized(new { message = "Invalid user ID or password." });
+
+            if (!user.Password.StartsWith("$2"))
+                return Unauthorized(new { message = "Account uses a legacy password. Please re-register." });
+
+            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
                 return Unauthorized(new { message = "Invalid user ID or password." });
 
             var token = _tokenService.GenerateToken(user.Id.ToString(), user.UserID, "User");

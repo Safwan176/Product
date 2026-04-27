@@ -69,6 +69,18 @@ namespace Product.Controllers
             return Ok(new { message = $"Product with ID {id} deleted successfully." });
         }
 
+        [HttpPost("Bulk-add")]
+        [Authorize]
+        public async Task<ActionResult> BulkAdd([FromBody] List<Products.Models.Products> products)
+        {
+            if(products == null || products.Count == 0)
+                return BadRequest(new { message = "Product list cannot be empty." });
+
+            _context.Products.AddRangeAsync(products);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = $"{products.Count} products added successfully." });
+        }
+
     }
 }
 

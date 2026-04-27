@@ -4,6 +4,7 @@ using Product.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Register services
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
