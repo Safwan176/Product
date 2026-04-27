@@ -9,7 +9,8 @@
       "PowerShell(gh auth status 2>&1)",
       "PowerShell(Stop-Process -Name \"Product\" -Force -ErrorAction SilentlyContinue)",
       "Bash(dotnet list *)",
-      "Bash(dotnet build *)"
+      "Bash(dotnet build *)",
+      "Bash(dotnet remove *)"
     ]
   }
 }
